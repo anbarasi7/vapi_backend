@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CallReportModel } from "../models/callrReportModel.js";
 const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
-const backend_url = 'https://609f-2405-201-300c-ae0-71ed-95e1-50ee-716e.ngrok-free.app/'
+const backend_url = 'https://api-talkypies.vercel.app/'
 export const createAssistant = async (req, res) => {
   const { childName, customPrompt } = req.body;
 
