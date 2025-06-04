@@ -22,6 +22,7 @@ export const createAssistant = async (req, res) => {
           ],
           temperature: 0.3,
         },
+         silenceTimeoutSeconds: 15,
         voice: {
           provider: "cartesia",
           voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
