@@ -86,6 +86,8 @@ export const getSessions = async (req, res) => {
   {
     $facet: {
       data: [
+        { $sort: { timestamp: -1 } },        // Sort by timestamp DESC
+        { $limit: 20 },  
         {
           $project: {
             timestamp: 1,
