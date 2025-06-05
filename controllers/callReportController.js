@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CallReportModel } from "../models/callrReportModel.js";
+import { mongooseConnection } from "../config/mongooseConfig.js";
 const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
 export const createAssistant = async (req, res) => {
@@ -50,6 +51,10 @@ export const createAssistant = async (req, res) => {
 }
 
 export const storeCallReport = async (req, res) => {
+  // Ensure mongoose is connected
+  await mongooseConnection();
+
+  // console.log("Received request body:", req.body);
      if (req.body.message.type=="end-of-call-report") {
         const  callReport  = req.body.message;
         // console.log("Call Report:", callReport);
@@ -72,6 +77,10 @@ export const storeCallReport = async (req, res) => {
 
 export const getSessions = async (req, res) => {
   try {
+// Ensure mongoose is connected
+    await mongooseConnection();
+
+    
     const result = await CallReportModel.aggregate([
   {
     $project: {
