@@ -1,10 +1,10 @@
 import axios from "axios";
 import { CallReportModel } from "../models/callrReportModel.js";
 import { mongooseConnection } from "../config/mongooseConfig.js";
-const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
+// const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
 export const createAssistant = async (req, res) => {
-  const { childName, customPrompt } = req.body;
+  const { childName, customPrompt , vapiKey: VAPI_API_KEY } = req.body;
 
   try {
     const response = await axios.post(
