@@ -4,8 +4,16 @@ import { mongooseConnection } from "../config/mongooseConfig.js";
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
 export const createAssistant = async (req, res) => {
-  const { childName, customPrompt , vapiKey: VAPI_API_KEY } = req.body;
+  const { childName, customPrompt , vapiKey: VAPI_API_KEY, prompt } = req.body;
 
+  let finalPrompt = `You're a versatile AI assistant named Eva with a personality of a cat who is fun to talk with. 
+            Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
+
+  if(prompt) {
+    finalPrompt = prompt;
+    finalPrompt += `Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
+  }
+  
   try {
     const response = await axios.post(
       "https://api.vapi.ai/assistant",
@@ -17,8 +25,7 @@ export const createAssistant = async (req, res) => {
           messages: [
             {
               role: "system",
-              content:  `You're a versatile AI assistant named Eva with a personality of a cat who is fun to talk with. 
-            Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`,
+              content:  finalPrompt,
             },
           ],
           temperature: 0.3,
