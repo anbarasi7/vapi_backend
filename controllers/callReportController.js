@@ -4,7 +4,7 @@ import { mongooseConnection } from "../config/mongooseConfig.js";
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
 export const createAssistant = async (req, res) => {
-  const { childName, customPrompt , vapiKey: VAPI_API_KEY, prompt } = req.body;
+  const { childName, customPrompt , vapiKey: VAPI_API_KEY, prompt, toyName } = req.body;
 
   let finalPrompt = `You're a versatile AI assistant named Eva with a personality of a cat who is fun to talk with. 
             Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
@@ -35,7 +35,7 @@ export const createAssistant = async (req, res) => {
           provider: "cartesia",
           voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
         },
-        firstMessage: `Hi ${childName || "there"}! I am Eva! How can I assist you today?`,
+        firstMessage: `Hi ${childName || "there"}! I am ${toyName || "Eva"}! How can I assist you today?`,
         firstMessageMode: "assistant-speaks-first",
         serverMessages: ["end-of-call-report", "function-call"],
         server: {
