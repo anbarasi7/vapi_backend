@@ -17,7 +17,10 @@ export const createAssistant = async (req, res) => {
     finalPrompt = prompt;
     finalPrompt += `Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
   }
-  
+  //           provider: "cartesia",
+  //        voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
+          
+   
   try {
     const response = await axios.post(
       "https://api.vapi.ai/assistant",
@@ -36,8 +39,8 @@ export const createAssistant = async (req, res) => {
         },
          silenceTimeoutSeconds: 15,
         voice: {
-          provider: "cartesia",
-          voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
+          provider: "vapi",
+          voiceId: "Neha",
           speed: 0.8
         },
         transcriber: {
