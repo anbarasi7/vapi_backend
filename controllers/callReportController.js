@@ -3,6 +3,9 @@ import { CallReportModel } from "../models/callrReportModel.js";
 import { mongooseConnection } from "../config/mongooseConfig.js";
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
+
+
+
 export const createAssistant = async (req, res) => {
   const { childName, customPrompt , vapiKey="b2047282-7b8a-421b-b33d-7abfdbdddcfd" , prompt, toyName } = req.body;
   const VAPI_API_KEY = vapiKey || process.env.VAPI_API_KEY;
@@ -35,7 +38,16 @@ export const createAssistant = async (req, res) => {
         voice: {
           provider: "cartesia",
           voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
+          speed: 0.8
         },
+        transcriber: {
+          provider: "deepgram",
+          language: "en-IN"
+        },
+        backgroundDenoisingEnabled: true,
+        stopSpeakingPlan: {
+        backoffSeconds: 4
+      },
         firstMessage: `Hi ${childName || "there"}! I am ${toyName || "Eva"}! How can I assist you today?`,
         firstMessageMode: "assistant-speaks-first",
         serverMessages: ["end-of-call-report", "function-call"],
