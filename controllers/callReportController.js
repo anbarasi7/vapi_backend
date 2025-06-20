@@ -10,8 +10,10 @@ export const createAssistant = async (req, res) => {
   const { childName, customPrompt , vapiKey="b2047282-7b8a-421b-b33d-7abfdbdddcfd" , prompt, toyName } = req.body;
   const VAPI_API_KEY = vapiKey || process.env.VAPI_API_KEY;
   
-  let finalPrompt = `You're a versatile AI assistant named Eva with a personality of a cat who is fun to talk with. 
-            Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
+  let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner. Please be concise in your responses. Use very simple language that kids can understand and use short sentences. 
+  Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
+
+  
 
   if(prompt) {
     finalPrompt = prompt;
@@ -37,7 +39,7 @@ export const createAssistant = async (req, res) => {
           ],
           temperature: 0.3,
         },
-         silenceTimeoutSeconds: 15,
+         silenceTimeoutSeconds: 30,
         voice: {
           provider: "vapi",
           voiceId: "Neha",
