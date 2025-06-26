@@ -21,7 +21,8 @@ export const createAssistant = async (req, res) => {
   }
   //           provider: "cartesia",
   //        voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
-          
+        
+  return res.json({assistantId: "80526715-0b84-4217-bbf0-0a85d9a90b88"}); // For testing purposes, returning a static assistantId
    
   try {
     const response = await axios.post(
