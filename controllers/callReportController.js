@@ -7,8 +7,8 @@ const backend_url = 'https://api-talkypies.vercel.app/'
 
 
 export const createAssistant = async (req, res) => {
-  const { childName, customPrompt , vapiKey="b2047282-7b8a-421b-b33d-7abfdbdddcfd" , prompt, toyName } = req.body;
-  const VAPI_API_KEY = vapiKey || process.env.VAPI_API_KEY;
+  const { childName, customPrompt , vapiKey , prompt, toyName } = req.body;
+  const VAPI_API_KEY = vapiKey || "b2047282-7b8a-421b-b33d-7abfdbdddcfd";
   
   let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner. Please be concise in your responses. Use very simple language that kids can understand and use short sentences. 
   Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
@@ -50,7 +50,7 @@ export const createAssistant = async (req, res) => {
           provider: "deepgram",
           language: "en-IN"
         },
-        backgroundDenoisingEnabled: true,
+        // backgroundDenoisingEnabled: true,
         stopSpeakingPlan: {
         backoffSeconds: 4
       },
