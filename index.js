@@ -4,6 +4,8 @@ import axios from "axios";
 import cors from "cors";
 import { mongooseConnection } from "./config/mongooseConfig.js";
 import vapiRoutes from "./routes/vapiRoutes.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(cors());

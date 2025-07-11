@@ -1,6 +1,9 @@
 import axios from "axios";
 import { CallReportModel } from "../models/callrReportModel.js";
 import { mongooseConnection } from "../config/mongooseConfig.js";
+import { AccessToken } from 'livekit-server-sdk';
+import dotenv from 'dotenv';
+dotenv.config();
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 const backend_url = 'https://api-talkypies.vercel.app/'
 
@@ -10,7 +13,8 @@ export const createAssistant = async (req, res) => {
   const { childName, customPrompt , vapiKey , prompt, toyName } = req.body;
   const VAPI_API_KEY = vapiKey || "b2047282-7b8a-421b-b33d-7abfdbdddcfd";
   
-  let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner. Please be concise in your responses. Use very simple language that kids can understand and use short sentences. 
+  let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner.
+   Please be concise in your responses. Use very simple language that kids can understand and use short sentences. 
   Make sure to follow these instruction while replying: ${customPrompt || "Be friendly and helpful."}`;
 
   
@@ -69,7 +73,7 @@ export const createAssistant = async (req, res) => {
     );
     // console.log("Assistant created:", response);
 
-    res.json({ assistantId: response.data.id });
+    res.json({ assistantId: response.data.id, finalPrompt });
   } catch (error) {
     console.error("Error creating assistant:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to create assistant" });
@@ -158,3 +162,26 @@ res.status(200).json({callData, ...totals});
       res.status(500).json({ error: "Failed to get sessions" });
   }
 };
+
+
+
+
+export const createLiveKitToken = async (req,res) => {
+  // If this room doesn't exist, it'll be automatically created when the first
+  // participant joins
+  const roomName = 'quickstart-room';
+  // Identifier to be used for participant.
+  // It's available as LocalParticipant.identity with livekit-client SDK
+  const participantName = 'quickstart-username';
+
+  const at = new AccessToken(process.env.LIVEKIT_API_KEY, process.env.LIVEKIT_API_SECRET, {
+    identity: participantName,
+    // Token to expire after 10 minutes
+    ttl: '10m',
+  });
+  at.addGrant({ roomJoin: true, room: roomName });
+
+  const token =  await at.toJwt();
+  res.json({ token, roomName, participantName });
+};
+
