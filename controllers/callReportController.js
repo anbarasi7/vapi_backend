@@ -51,8 +51,8 @@ export const createAssistant = async (req, res) => {
           speed: 0.8
         },
         transcriber: {
-          provider: "deepgram",
-          language: "en-IN"
+          provider: 'custom-transcriber',
+          server: { url: 'wss://api-talkypies.vercel.app/api/custom-transcriber' },
         },
         // backgroundDenoisingEnabled: true,
         stopSpeakingPlan: {
@@ -60,7 +60,7 @@ export const createAssistant = async (req, res) => {
       },
         firstMessage: `Hi ${childName || "there"}! I am ${toyName || "Eva"}! How can I assist you today?`,
         firstMessageMode: "assistant-speaks-first",
-        serverMessages: ["end-of-call-report", "function-call"],
+        serverMessages: ["end-of-call-report", "function-call"],  
         server: {
           url: `${backend_url}vapi/end-call-report`, // Optional webhook
         },
@@ -184,4 +184,5 @@ export const createLiveKitToken = async (req,res) => {
   const token =  await at.toJwt();
   res.json({ token, roomName, participantName });
 };
+
 
