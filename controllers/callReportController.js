@@ -15,8 +15,8 @@ export const createAssistant = async (req, res) => {
   console.log("Received request body:", req.body);
   const VAPI_API_KEY = vapiKey || "TEST_FALLBACK" ;
   // "b2047282-7b8a-421b-b33d-7abfdbdddcfd";
-  console.log("VAPI API Key:", VAPI_API_KEY);
-  console.log("vapiKey:", vapiKey);
+  console.log("vapiKey:", req.body.vapiKey, "type:", typeof req.body.vapiKey);
+
 
   let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner.
    Please be concise in your responses. Use very simple language that kids can understand and use short sentences. 
