@@ -13,6 +13,9 @@ const backend_url = process.env.BACKEND_URL || 'https://backend-robotics-voice-a
 export const createAssistant = async (req, res) => {
   const { childName, customPrompt , vapiKey , prompt, toyName } = req.body;
   console.log("Received request body:", req.body);
+  if (vapiKey === "null" || vapiKey === "" || vapiKey === undefined) {
+  vapiKey = null;
+}
   const VAPI_API_KEY = vapiKey || "b2047282-7b8a-421b-b33d-7abfdbdddcfd" ;
   
   console.log("vapiKey:", req.body.vapiKey, "type:", typeof req.body.vapiKey);
