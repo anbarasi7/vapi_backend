@@ -34,7 +34,14 @@ attachCustomTranscriberWS(server);
 
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT,async () => {
-   console.log(`🚀 Server listening on port ${PORT} (HTTP + WebSocket)`);
-  await mongooseConnection();
+server.listen(PORT,"0.0.0.0",async () => {
+
+  try {
+    await mongooseConnection();
+    console.log(`🚀 Server listening on port ${PORT} (HTTP + WebSocket)`);
+  } catch (err) {
+    console.error("❌ Failed to connect to MongoDB:", err);
+    process.exit(1); // crash early, Render will restart
+  }
+
 });
