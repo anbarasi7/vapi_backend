@@ -16,7 +16,9 @@ export const createAssistant = async (req, res) => {
   if (vapiKey === "null" || vapiKey === "" || vapiKey === undefined) {
   vapiKey = null;
 }
-  const VAPI_API_KEY = vapiKey || "b2047282-7b8a-421b-b33d-7abfdbdddcfd" ;
+  const VAPI_API_KEY = vapiKey || "22e01bb4-d8c1-4726-b02a-06b88ab50b67";
+  
+  //"b2047282-7b8a-421b-b33d-7abfdbdddcfd" ;
   
   console.log("vapiKey:", req.body.vapiKey, "type:", typeof req.body.vapiKey);
 
