@@ -11,16 +11,15 @@ const backend_url = process.env.BACKEND_URL || 'https://backend-robotics-voice-a
 
 
 export const createAssistant = async (req, res) => {
-  let { childName, customPrompt , vapiKey , prompt, toyName } = req.body;
-  console.log("Received request body:", req.body);
+  let { childName, customPrompt , vapiKey , prompt, toyName, customTranscript } = req.body;
+  
   if (vapiKey === "null" || vapiKey === "" || vapiKey === undefined) {
   vapiKey = null;
 }
-  const VAPI_API_KEY = vapiKey || "22e01bb4-d8c1-4726-b02a-06b88ab50b67";
+  const VAPI_API_KEY = vapiKey || "a40bdb51-da75-4263-bd2f-28cc8f6593ed"; // Default key if none provided
   
   //"b2047282-7b8a-421b-b33d-7abfdbdddcfd" ;
   
-  console.log("vapiKey:", req.body.vapiKey, "type:", typeof req.body.vapiKey);
 
 
   let finalPrompt = `You are a kid assistant, who helps engage kids in a fun playful manner.
@@ -37,7 +36,22 @@ export const createAssistant = async (req, res) => {
   //        voiceId: "3b554273-4299-48b9-9aaf-eefd438e3941",
         
   // return res.json({assistantId: "80526715-0b84-4217-bbf0-0a85d9a90b88"}); // For testing purposes, returning a static assistantId
-   
+  
+  let transcriptionSetup = {};
+if(customTranscript) {
+  transcriptionSetup = {
+          provider: "custom-transcriber",
+          server: { url: 'wss://backend-robotics-voice-assistance.onrender.com/api/custom-transcriber' },
+        };
+
+} else {
+    transcriptionSetup = {
+          provider: "deepgram",
+          language: "en-IN"
+        };  
+}
+
+
   try {
     const response = await axios.post(
       "https://api.vapi.ai/assistant",
@@ -60,10 +74,7 @@ export const createAssistant = async (req, res) => {
           voiceId: "Neha",
           speed: 0.8
         },
-        transcriber: {
-          provider: 'custom-transcriber',
-          server: { url: 'wss://backend-robotics-voice-assistance.onrender.com/api/custom-transcriber' },
-        },
+        transcriber: transcriptionSetup,
         // backgroundDenoisingEnabled: true,
         stopSpeakingPlan: {
         backoffSeconds: 4
