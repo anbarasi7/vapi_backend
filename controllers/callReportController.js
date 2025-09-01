@@ -79,9 +79,7 @@ if(customTranscript) {
         stopSpeakingPlan: {
         backoffSeconds: 4
       },
-      startSpeakingPlan: {
-        waitSeconds: 0
-      },
+      
         firstMessage: `Hi ${childName || "there"}! I am ${toyName || "Eva"}! How can I assist you today?`,
         firstMessageMode: "assistant-speaks-first",
         serverMessages: ["end-of-call-report", "function-call"],  
