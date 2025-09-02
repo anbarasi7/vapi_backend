@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 // const backend_url = 'https://api-talkypies.vercel.app/'
-const backend_url = process.env.BACKEND_URL || 'https://backend-robotics-voice-assistance.onrender.com/';
+const backend_url = process.env.BACKEND_URL || 'https://talkypie-vapi-backend.onrender.com/';
 
 
 
@@ -41,7 +41,7 @@ export const createAssistant = async (req, res) => {
 if(customTranscript) {
   transcriptionSetup = {
           provider: "custom-transcriber",
-          server: { url: 'wss://backend-robotics-voice-assistance.onrender.com/api/custom-transcriber' },
+          server: { url: 'wss://talkypie-vapi-backend.onrender.com/api/custom-transcriber' },
         };
 
 } else {
