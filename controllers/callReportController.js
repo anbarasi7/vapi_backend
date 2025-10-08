@@ -5,8 +5,10 @@ import { AccessToken } from 'livekit-server-sdk';
 import dotenv from 'dotenv';
 dotenv.config();
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
-// const backend_url = 'https://api-talkypies.vercel.app/'
-const backend_url = process.env.BACKEND_URL || 'https://talkypie-vapi-backend.onrender.com/';
+// const url = 'https://api-talkypies.vercel.app/'
+ const url = 'https://talkypie-vapi-backend.vercel.app/';
+// const url = 'https://talkypie-vapi-backend.onrender.com/';
+const backend_url = process.env.BACKEND_URL || url;
 
 
 
@@ -18,7 +20,7 @@ export const createAssistant = async (req, res) => {
 }
   const VAPI_API_KEY = vapiKey || "a40bdb51-da75-4263-bd2f-28cc8f6593ed"; // Default key if none provided
   
-  //"b2047282-7b8a-421b-b33d-7abfdbdddcfd" ;
+  
   
 
 
@@ -37,11 +39,13 @@ export const createAssistant = async (req, res) => {
         
   // return res.json({assistantId: "80526715-0b84-4217-bbf0-0a85d9a90b88"}); // For testing purposes, returning a static assistantId
   
+   // const websocket_url = 'wss://talkypie-vapi-backend.onrender.com/api/custom-transcriber;
+   const  websocket_url = 'wss://talkypie-vapi-backend.vercel.app/api/custom-transcriber';
   let transcriptionSetup = {};
 if(customTranscript) {
   transcriptionSetup = {
           provider: "custom-transcriber",
-          server: { url: 'wss://talkypie-vapi-backend.onrender.com/api/custom-transcriber' },
+          server: { url: websocket_url },
         };
 
 } else {
@@ -50,6 +54,10 @@ if(customTranscript) {
           language: "en-IN"
         };  
 }
+
+
+
+
 
 
   try {
@@ -126,6 +134,7 @@ export const storeCallReport = async (req, res) => {
     res.status(400).json({ error: "Invalid message type" });
   }
 };
+
 
 export const getSessions = async (req, res) => {
   try {
