@@ -6,15 +6,16 @@ import dotenv from 'dotenv';
 dotenv.config();
 // const VAPI_API_KEY = "2e8fb729-d3a2-4138-b473-37a28497c5d0";
 // const url = 'https://api-talkypies.vercel.app/'
- const url = 'https://talkypie-vapi-backend.vercel.app/';
+ //const url = 'https://talkypie-vapi-backend.vercel.app/';
 // const url = 'https://talkypie-vapi-backend.onrender.com/';
-const backend_url = process.env.BACKEND_URL || url;
+const backend_url = process.env.BACKEND_URL || "https://vapi-backend-kgck.onrender.com/";
 
 
 
 export const createAssistant = async (req, res) => {
   let { childName, customPrompt , vapiKey , prompt, toyName, customTranscript } = req.body;
   
+  console.log("Starting assistant creation API call...");
   if (vapiKey === "null" || vapiKey === "" || vapiKey === undefined) {
   vapiKey = null;
 }
@@ -40,27 +41,22 @@ export const createAssistant = async (req, res) => {
   // return res.json({assistantId: "80526715-0b84-4217-bbf0-0a85d9a90b88"}); // For testing purposes, returning a static assistantId
   
    // const websocket_url = 'wss://talkypie-vapi-backend.onrender.com/api/custom-transcriber;
-   const  websocket_url = 'wss://talkypie-vapi-backend.vercel.app/api/custom-transcriber';
+   const  websocket_url = 'wss://vapi-backend-kgck.onrender.com/api/custom-transcriber';
   let transcriptionSetup = {};
-if(customTranscript) {
-  transcriptionSetup = {
-          provider: "custom-transcriber",
-          server: { url: websocket_url },
-        };
-
-} else {
+  if(customTranscript) {
     transcriptionSetup = {
-          provider: "deepgram",
-          language: "en-IN"
-        };  
-}
-
-
-
-
-
+      provider: "custom-transcriber",
+      server: { url: websocket_url },
+    };
+  } else {
+    transcriptionSetup = {
+      provider: "deepgram",
+      language: "en-IN"
+    };  
+  }
 
   try {
+    console.log("Starting assistant creation API call...");
     const response = await axios.post(
       "https://api.vapi.ai/assistant",
       {
@@ -102,7 +98,8 @@ if(customTranscript) {
       }
     );
     // console.log("Assistant created:", response);
-
+    console.log("🎉 Assistant created!",response.data);
+    console.log("ID:", response.data.id);
     res.json({ assistantId: response.data.id, finalPrompt });
   } catch (error) {
     console.error("Error creating assistant:", error.response?.data || error.message);
